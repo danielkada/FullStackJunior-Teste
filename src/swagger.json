@@ -1,0 +1,224 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "API para listar, buscar, criar, alterar e excluir usuário",
+    "version": "1.0.0",
+    "title": "API para manipulação de usuários",
+    "contact": {
+      "email": "dgames201615@outlook.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Listagem de usuários",
+        "description": "Essa rota é responsável por listar todos os usuários",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "No registered user"
+          },
+          "202": {
+            "description": "Returned users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de usuário",
+        "description": "Essa rota é responsável por cadastrar um novo usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "email": "string",
+                  "password": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "This email is already in use"
+          },
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclusão de usuários",
+        "description": "Essa rota é responsável por excluir todos os usuários",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "No registered user"
+          },
+          "202": {
+            "description": "Users successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "Busca de usuário",
+        "description": "Essa rota é responsável pela bsuca de um usuário pelo ID",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Id do usuário para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "User not found"
+          },
+          "200": {
+            "description": "Returned user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Alteração de usuário",
+        "description": "Essa rota é responsável pela alteração de um usuário pelo ID",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário para alteração do mesmo",
+            "required": true,
+            "schema": {
+              "example": "985e6dee-c901-46d3-9c89-cbbcba2d9a8b"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "email": "string",
+                  "password": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "This email is already in use"
+          },
+          "201": {
+            "description": "User changed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclusão de usuário",
+        "description": "Essa rota é responsável pela exclusão de todos os usuários",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do usuário para alteração do mesmo",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "User not found"
+          },
+          "200": {
+            "description": "User successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

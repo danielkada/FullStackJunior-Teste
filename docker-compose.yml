@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: pg_contele
+    environment:
+      - POSTGRES_PASSWORD=fullstack
+      - POSTGRES_USER=contele
+    ports:
+      - "5432:5432"
